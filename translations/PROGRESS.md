@@ -35,8 +35,8 @@
 
 | 章节 | 名称 | 状态 | 翻译者 | 完成日期 | 备注 |
 |-----|------|------|--------|---------|-----|
-| Part 3 | Operator Precedence | ⏳ 待开始 | - | - | 运算符优先级 |
-| Part 4 | An Actual Compiler | ⏳ 待开始 | - | - | 一个真正的编译器 |
+| Part 3 | Operator Precedence | ✅ 已完成 | - | 2026-03-19 | MD文档 + 源代码注释 |
+| Part 4 | An Actual Compiler | ✅ 已完成 | - | 2026-03-19 | MD文档 + 源代码注释 |
 | Part 5 | Statements | ⏳ 待开始 | - | - | 语句 |
 | Part 6 | Variables | ⏳ 待开始 | - | - | 变量 |
 | Part 7 | Comparison Operators | ⏳ 待开始 | - | - | 比较运算符 |
@@ -168,6 +168,8 @@
 |-----|----------|------|
 | Part 1 | `scan.c`, `main.c` | ✅ 已完成 |
 | Part 2 | `scan.c`, `main.c`, `tree.c`, `interp.c`, `expr.c` | ✅ 已完成 |
+| Part 3 | `scan.c`, `main.c`, `tree.c`, `interp.c`, `expr.c`, `expr2.c` | ✅ 已完成 |
+| Part 4 | `scan.c`, `main.c`, `tree.c`, `interp.c`, `gen.c`, `expr.c`, `cg.c`, `cgn.c` | ✅ 已完成 |
 
 **源代码翻译规范**：参见 `GUIDELINES.md`
 
@@ -175,10 +177,10 @@
 
 ## 统计数据
 
-- **MD文档已完成**: 3 / 65 (4.6%)
-- **源代码注释已完成**: Part 1-2 (100% for these chapters)
+- **MD文档已完成**: 5 / 65 (7.7%)
+- **源代码注释已完成**: Part 1-4 (100% for these chapters)
 - **进行中**: 0
-- **待开始**: 62 章节 MD + 源代码
+- **待开始**: 60 章节 MD + 源代码
 
 ---
 
