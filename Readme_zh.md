@@ -22,8 +22,8 @@
  + [第 6 章](06_Variables/Readme_zh.md)：变量
  + [第 7 章](07_Comparisons/Readme_zh.md)：比较运算符
  + [第 8 章](08_If_Statements/Readme_zh.md)：If 语句
- + [第 9 章](09_While_Loops/Readme.md)：While 循环
- + [第 10 章](10_For_Loops/Readme.md)：For 循环
+ + [第 9 章](09_While_Loops/Readme_zh.md)：While 循环
+ + [第 10 章](10_For_Loops/Readme_zh.md)：For 循环
  + [第 11 章](11_Functions_pt1/Readme.md)：函数，第一部分
  + [第 12 章](12_Types_pt1/Readme.md)：类型，第一部分
  + [第 13 章](13_Functions_pt2/Readme.md)：函数，第二部分

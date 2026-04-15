@@ -1,0 +1,187 @@
+#include "defs.h"
+#include "data.h"
+#include "decl.h"
+
+// x86-64 的代码生成器
+// Copyright (c) 2019 Warren Toomey, GPL3
+
+
+// 可用寄存器及其名称列表
+static int freereg[4];
+static char *reglist[4]  = { "r8",  "r9",  "r10",  "r11" };
+static char *breglist[4] = { "r8b", "r9b", "r10b", "r11b" };
+
+// 将所有寄存器设置为可用
+void freeall_registers(void) {
+  freereg[0] = freereg[1] = freereg[2] = freereg[3] = 1;
+}
+
+// 分配一个可用寄存器。返回
+// 寄存器的编号。如果没有可用寄存器则报错。
+static int alloc_register(void) {
+  for (int i = 0; i < 4; i++) {
+    if (freereg[i]) {
+      freereg[i] = 0;
+      return (i);
+    }
+  }
+  fatal("Out of registers");
+}
+
+// 将一个寄存器返回到可用寄存器列表。
+// 检查它是否已经在那里。
+static void free_register(int reg) {
+  if (freereg[reg] != 0)
+    fatald("Error trying to free register", reg);
+  freereg[reg] = 1;
+}
+
+// 输出汇编前导码
+void cgpreamble() {
+  freeall_registers();
+  fputs("\tglobal\tmain\n"
+	"\textern\tprintf\n"
+	"\tsection\t.text\n"
+	"LC0:\tdb\t\"%d\",10,0\n"
+	"printint:\n"
+	"\tpush\trbp\n"
+	"\tmov\trbp, rsp\n"
+	"\tsub\trsp, 16\n"
+	"\tmov\t[rbp-4], edi\n"
+	"\tmov\teax, [rbp-4]\n"
+	"\tmov\tesi, eax\n"
+	"\tlea\trdi, [rel LC0]\n"
+	"\tmov\teax, 0\n"
+	"\tcall\tprintf\n"
+	"\tnop\n"
+	"\tleave\n"
+	"\tret\n"
+	"\n"
+	"main:\n" "\tpush\trbp\n" "\tmov\trbp, rsp\n", Outfile);
+}
+
+// 输出汇编后置码
+void cgpostamble() {
+  fputs("\tmov	eax, 0\n" "\tpop	rbp\n" "\tret\n", Outfile);
+}
+
+// 将一个整数字面量值加载到寄存器中。
+// 返回寄存器的编号
+int cgloadint(int value) {
+  // 获取一个新寄存器
+  int r = alloc_register();
+
+  // 输出初始化它的代码
+  fprintf(Outfile, "\tmov\t%s, %d\n", reglist[r], value);
+  return (r);
+}
+
+// 将一个变量值加载到寄存器中。
+// 返回寄存器的编号
+int cgloadglob(char *identifier) {
+  // 获取一个新寄存器
+  int r = alloc_register();
+
+  // 输出初始化它的代码
+  fprintf(Outfile, "\tmov\t%s, [%s]\n", reglist[r], identifier);
+  return (r);
+}
+
+// 将两个寄存器相加并返回
+// 包含结果的寄存器编号
+int cgadd(int r1, int r2) {
+  fprintf(Outfile, "\tadd\t%s, %s\n", reglist[r2], reglist[r1]);
+  free_register(r1);
+  return (r2);
+}
+
+// 从第一个寄存器减去第二个寄存器并
+// 返回包含结果的寄存器编号
+int cgsub(int r1, int r2) {
+  fprintf(Outfile, "\tsub\t%s, %s\n", reglist[r1], reglist[r2]);
+  free_register(r2);
+  return (r1);
+}
+
+// 将两个寄存器相乘并返回
+// 包含结果的寄存器编号
+int cgmul(int r1, int r2) {
+  fprintf(Outfile, "\timul\t%s, %s\n", reglist[r2], reglist[r1]);
+  free_register(r1);
+  return (r2);
+}
+
+// 将第一个寄存器除以第二个寄存器并
+// 返回包含结果的寄存器编号
+int cgdiv(int r1, int r2) {
+  fprintf(Outfile, "\tmov\trax, %s\n", reglist[r1]);
+  fprintf(Outfile, "\tcqo\n");
+  fprintf(Outfile, "\tidiv\t%s\n", reglist[r2]);
+  fprintf(Outfile, "\tmov\t%s, rax\n", reglist[r1]);
+  free_register(r2);
+  return (r1);
+}
+
+// 使用给定寄存器调用 printint()
+void cgprintint(int r) {
+  fprintf(Outfile, "\tmov\trdi, %s\n", reglist[r]);
+  fprintf(Outfile, "\tcall\tprintint\n");
+  free_register(r);
+}
+
+// 将寄存器的值存储到变量中
+int cgstorglob(int r, char *identifier) {
+  fprintf(Outfile, "\tmov\t[%s], %s\n", identifier, reglist[r]);
+  return (r);
+}
+
+// 生成一个全局符号
+void cgglobsym(char *sym) {
+  fprintf(Outfile, "\tcommon\t%s 8:8\n", sym);
+}
+
+// 比较指令列表，
+// 按 AST 顺序：A_EQ, A_NE, A_LT, A_GT, A_LE, A_GE
+static char *cmplist[] =
+  { "sete", "setne", "setl", "setg", "setle", "setge" };
+
+// 比较两个寄存器并在为真时设置。
+int cgcompare_and_set(int ASTop, int r1, int r2) {
+
+  // 检查 AST 操作的范围
+  if (ASTop < A_EQ || ASTop > A_GE)
+    fatal("Bad ASTop in cgcompare_and_set()");
+
+  fprintf(Outfile, "\tcmp\t%s, %s\n", reglist[r1], reglist[r2]);
+  fprintf(Outfile, "\t%s\t%s\n", cmplist[ASTop - A_EQ], breglist[r2]);
+  fprintf(Outfile, "\tmovzx\t%s, %s\n", reglist[r2], breglist[r2]);
+  free_register(r1);
+  return (r2);
+}
+
+// 生成一个标签
+void cglabel(int l) {
+  fprintf(Outfile, "L%d:\n", l);
+}
+
+// 生成一个跳转到标签的跳转
+void cgjump(int l) {
+  fprintf(Outfile, "\tjmp\tL%d\n", l);
+}
+
+// 反转的跳转指令列表，
+// 按 AST 顺序：A_EQ, A_NE, A_LT, A_GT, A_LE, A_GE
+static char *invcmplist[] = { "jne", "je", "jge", "jle", "jg", "jl" };
+
+// 比较两个寄存器并在为假时跳转。
+int cgcompare_and_jump(int ASTop, int r1, int r2, int label) {
+
+  // 检查 AST 操作的范围
+  if (ASTop < A_EQ || ASTop > A_GE)
+    fatal("Bad ASTop in cgcompare_and_set()");
+
+  fprintf(Outfile, "\tcmp\t%s, %s\n", reglist[r1], reglist[r2]);
+  fprintf(Outfile, "\t%s\tL%d\n", invcmplist[ASTop - A_EQ], label);
+  freeall_registers();
+  return (NOREG);
+}
