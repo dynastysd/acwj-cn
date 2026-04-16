@@ -48,9 +48,9 @@
 
 | 章节 | 名称 | 状态 | 翻译者 | 完成日期 | 备注 |
 |-----|------|------|--------|---------|-----|
-| Part 11 | Functions, part 1 | ⏳ 待开始 | - | - | 函数 part 1 |
-| Part 12 | Types, part 1 | ⏳ 待开始 | - | - | 类型 part 1 |
-| Part 13 | Functions, part 2 | ⏳ 待开始 | - | - | 函数 part 2 |
+| Part 11 | Functions, part 1 | ✅ 已完成 | - | 2026-04-16 | 函数 part 1 |
+| Part 12 | Types, part 1 | ✅ 已完成 | - | 2026-04-16 | 类型 part 1 |
+| Part 13 | Functions, part 2 | ✅ 已完成 | - | 2026-04-16 | 函数 part 2 |
 
 ### 后端与指针 (Backend & Pointers)
 
@@ -176,6 +176,9 @@
 | Part 8 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cgn.c` | ✅ 已完成 |
 | Part 9 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cgn.c` | ✅ 已完成 |
 | Part 10 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cgn.c` | ✅ 已完成 |
+| Part 11 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cgn.c` | ✅ 已完成 |
+| Part 12 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cgn.c`, `types.c` | ✅ 已完成 |
+| Part 13 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cgn.c`, `types.c` | ✅ 已完成 |
 
 **源代码翻译规范**：参见 `GUIDELINES.md`
 
@@ -183,10 +186,10 @@
 
 ## 统计数据
 
-- **MD文档已完成**: 11 / 65 (16.9%)
-- **源代码注释已完成**: Part 1-10 (100% for these chapters)
+- **MD文档已完成**: 14 / 65 (21.5%)
+- **源代码注释已完成**: Part 1-13 (100% for these chapters)
 - **进行中**: 0
-- **待开始**: 54 章节 MD + 源代码
+- **待开始**: 51 章节 MD + 源代码
 
 ---
 

@@ -24,9 +24,9 @@
  + [第 8 章](08_If_Statements/Readme_zh.md)：If 语句
  + [第 9 章](09_While_Loops/Readme_zh.md)：While 循环
  + [第 10 章](10_For_Loops/Readme_zh.md)：For 循环
- + [第 11 章](11_Functions_pt1/Readme.md)：函数，第一部分
- + [第 12 章](12_Types_pt1/Readme.md)：类型，第一部分
- + [第 13 章](13_Functions_pt2/Readme.md)：函数，第二部分
+ + [第 11 章](11_Functions_pt1/Readme_zh.md)：函数，第一部分
+ + [第 12 章](12_Types_pt1/Readme_zh.md)：类型，第一部分
+ + [第 13 章](13_Functions_pt2/Readme_zh.md)：函数，第二部分
  + [第 14 章](14_ARM_Platform/Readme.md)：生成 ARM 汇编代码
  + [第 15 章](15_Pointers_pt1/Readme.md)：指针，第一部分
  + [第 16 章](16_Global_Vars/Readme.md)：正确声明全局变量
