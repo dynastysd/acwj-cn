@@ -62,8 +62,8 @@
 | Part 17 | Better Type Checking and Pointer Offsets | ✅ 已完成 | - | 2026-04-17 | 更好的类型检查和指针偏移 |
 | Part 18 | Lvalues and Rvalues Revisited | ✅ 已完成 | - | 2026-04-17 | 左值和右值再探 |
 | Part 19 | Arrays, part 1 | ✅ 已完成 | - | 2026-04-17 | 数组 part 1 |
-| Part 20 | Character and String Literals | ⏳ 待开始 | - | - | 字符和字符串字面量 |
-| Part 21 | More Operators | ⏳ 待开始 | - | - | 更多的运算符 |
+| Part 20 | Character and String Literals | ✅ 已完成 | - | 2026-04-17 | 字符和字符串字面量 |
+| Part 21 | More Operators | ✅ 已完成 | - | 2026-04-17 | 更多的运算符 |
 
 ### 局部变量与函数调用 (Local Variables & Function Calls)
 
@@ -180,6 +180,8 @@
 | Part 17 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c` | ✅ 已完成 |
 | Part 18 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c` | ✅ 已完成 |
 | Part 19 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c` | ✅ 已完成 |
+| Part 20 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c` | ✅ 已完成 |
+| Part 21 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c` | ✅ 已完成 |
 
 **源代码翻译规范**：参见 `GUIDELINES.md`
 
@@ -187,10 +189,10 @@
 
 ## 统计数据
 
-- **MD文档已完成**: 20 / 65 (30.8%)
-- **源代码注释已完成**: Part 1-19 (100% for these chapters)
+- **MD文档已完成**: 22 / 65 (33.8%)
+- **源代码注释已完成**: Part 1-21 (100% for these chapters)
 - **进行中**: 0
-- **待开始**: 45 章节 MD + 源代码
+- **待开始**: 43 章节 MD + 源代码
 
 ---
 
