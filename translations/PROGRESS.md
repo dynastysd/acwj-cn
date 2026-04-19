@@ -69,9 +69,9 @@
 
 | 章节 | 名称 | 状态 | 翻译者 | 完成日期 | 备注 |
 |-----|------|------|--------|---------|-----|
-| Part 22 | Design Ideas for Local Variables and Function Calls | ⏳ 待开始 | - | - | 局部变量和函数调用的设计思路 |
-| Part 23 | Local Variables | ⏳ 待开始 | - | - | 局部变量 |
-| Part 24 | Function Parameters | ⏳ 待开始 | - | - | 函数参数 |
+| Part 22 | Design Ideas for Local Variables and Function Calls | ✅ 已完成 | - | 2026-04-19 | 局部变量和函数调用的设计思路 |
+| Part 23 | Local Variables | ✅ 已完成 | - | 2026-04-19 | 局部变量 |
+| Part 24 | Function Parameters | ✅ 已完成 | - | 2026-04-19 | 函数参数 |
 | Part 25 | Function Calls and Arguments | ⏳ 待开始 | - | - | 函数调用和实参 |
 | Part 26 | Function Prototypes | ⏳ 待开始 | - | - | 函数原型 |
 
@@ -182,6 +182,9 @@
 | Part 19 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c` | ✅ 已完成 |
 | Part 20 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c` | ✅ 已完成 |
 | Part 21 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c` | ✅ 已完成 |
+| Part 22 | 无新源代码（设计讨论章节） | ✅ 已完成 |
+| Part 23 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c` | ✅ 已完成 |
+| Part 24 | `scan.c`, `stmt.c`, `misc.c`, `main.c`, `gen.c`, `expr.c`, `tree.c`, `decl.c`, `sym.c`, `cg.c`, `cg_arm.c`, `cgn.c`, `types.c`, `input27a.c`, `input27b.c` | ✅ 已完成 |
 
 **源代码翻译规范**：参见 `GUIDELINES.md`
 
@@ -189,10 +192,10 @@
 
 ## 统计数据
 
-- **MD文档已完成**: 22 / 65 (33.8%)
-- **源代码注释已完成**: Part 1-21 (100% for these chapters)
+- **MD文档已完成**: 25 / 65 (38.5%)
+- **源代码注释已完成**: Part 1-24 (100% for these chapters)
 - **进行中**: 0
-- **待开始**: 43 章节 MD + 源代码
+- **待开始**: 41 章节 MD + 源代码
 
 ---
 

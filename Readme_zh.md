@@ -35,9 +35,9 @@
  + [第 19 章](19_Arrays_pt1/Readme_zh.md)：数组，第一部分
  + [第 20 章](20_Char_Str_Literals/Readme_zh.md)：字符和字符串字面量
  + [第 21 章](21_More_Operators/Readme_zh.md)：更多的运算符
- + [第 22 章](22_Design_Locals/Readme.md)：局部变量和函数调用的设计思路
- + [第 23 章](23_Local_Variables/Readme.md)：局部变量
- + [第 24 章](24_Function_Params/Readme.md)：函数参数
+ + [第 22 章](22_Design_Locals/Readme_zh.md)：局部变量和函数调用的设计思路
+ + [第 23 章](23_Local_Variables/Readme_zh.md)：局部变量
+ + [第 24 章](24_Function_Params/Readme_zh.md)：函数参数
  + [第 25 章](25_Function_Arguments/Readme.md)：函数调用和实参
  + [第 26 章](26_Prototypes/Readme.md)：函数原型
  + [第 27 章](27_Testing_Errors/Readme.md)：回归测试与惊喜
