@@ -46,14 +46,14 @@
  + [第 30 章](30_Design_Composites/Readme_zh.md)：设计 Struct、Union 和 Enum
  + [第 31 章](31_Struct_Declarations/Readme_zh.md)：实现 Struct，第一部分
  + [第 32 章](32_Struct_Access_pt1/Readme_zh.md)：访问 Struct 中的成员
- + [第 33 章](33_Unions/Readme.md)：实现 Union 和成员访问
- + [第 34 章](34_Enums_and_Typedefs/Readme.md)：Enum 和 Typedef
- + [第 35 章](35_Preprocessor/Readme.md)：C 预处理器
- + [第 36 章](36_Break_Continue/Readme.md)：`break` 和 `continue`
- + [第 37 章](37_Switch/Readme.md)：Switch 语句
- + [第 38 章](38_Dangling_Else/Readme.md)：悬空 Else 问题
- + [第 39 章](39_Var_Initialisation_pt1/Readme.md)：变量初始化，第一部分
- + [第 40 章](40_Var_Initialisation_pt2/Readme.md)：全局变量初始化
+ + [第 33 章](33_Unions/Readme_zh.md)：实现 Union 和成员访问
+ + [第 34 章](34_Enums_and_Typedefs/Readme_zh.md)：Enum 和 Typedef
+ + [第 35 章](35_Preprocessor/Readme_zh.md)：C 预处理器
+ + [第 36 章](36_Break_Continue/Readme_zh.md)：`break` 和 `continue`
+ + [第 37 章](37_Switch/Readme_zh.md)：Switch 语句
+ + [第 38 章](38_Dangling_Else/Readme_zh.md)：悬空 Else 问题
+ + [第 39 章](39_Var_Initialisation_pt1/Readme_zh.md)：变量初始化，第一部分
+ + [第 40 章](40_Var_Initialisation_pt2/Readme_zh.md)：全局变量初始化
  + [第 41 章](41_Local_Var_Init/Readme.md)：局部变量初始化
  + [第 42 章](42_Casting/Readme.md)：类型转换和 NULL
  + [第 43 章](43_More_Operators/Readme.md)：Bug 修复和更多运算符

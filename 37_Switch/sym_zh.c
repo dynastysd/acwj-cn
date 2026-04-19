@@ -1,0 +1,225 @@
+#include "defs.h"
+#include "data.h"
+#include "decl.h"
+
+// 符号表函数
+// Copyright (c) 2019 Warren Toomey, GPL3
+
+// 将节点追加到由head或tail指向的单向链表
+void appendsym(struct symtable **head, struct symtable **tail,
+	       struct symtable *node) {
+
+  // 检查有效指针
+  if (head == NULL || tail == NULL || node == NULL)
+    fatal("Either head, tail or node is NULL in appendsym");
+
+  // 追加到列表
+  if (*tail) {
+    (*tail)->next = node;
+    *tail = node;
+  } else
+    *head = *tail = node;
+  node->next = NULL;
+}
+
+// 创建一个要添加到符号表列表的符号节点
+// 设置节点的：
+// + type: char, int等
+// + ctype: struct/union的复合类型指针
+// + 结构类型: var, function, array等
+// + size: 元素数量，或endlabel: 函数结束标签
+// + posn: 局部符号的位置信息
+// 返回指向新节点的指针
+struct symtable *newsym(char *name, int type, struct symtable *ctype,
+			int stype, int class, int size, int posn) {
+
+  // 获取一个新节点
+  struct symtable *node = (struct symtable *) malloc(sizeof(struct symtable));
+  if (node == NULL)
+    fatal("Unable to malloc a symbol table node in newsym");
+
+  // 填充值
+  node->name = strdup(name);
+  node->type = type;
+  node->ctype = ctype;
+  node->stype = stype;
+  node->class = class;
+  node->size = size;
+  node->posn = posn;
+  node->next = NULL;
+  node->member = NULL;
+
+  // 生成任何全局空间
+  if (class == C_GLOBAL)
+    genglobsym(node);
+  return (node);
+}
+
+// 将符号添加到全局符号列表
+struct symtable *addglob(char *name, int type, struct symtable *ctype,
+			 int stype, int class, int size) {
+  struct symtable *sym = newsym(name, type, ctype, stype, class, size, 0);
+  appendsym(&Globhead, &Globtail, sym);
+  return (sym);
+}
+
+// 将符号添加到局部符号列表
+struct symtable *addlocl(char *name, int type, struct symtable *ctype,
+			 int stype, int size) {
+  struct symtable *sym = newsym(name, type, ctype, stype, C_LOCAL, size, 0);
+  appendsym(&Loclhead, &Locltail, sym);
+  return (sym);
+}
+
+// 将符号添加到参数列表
+struct symtable *addparm(char *name, int type, struct symtable *ctype,
+		 	 int stype, int size) {
+  struct symtable *sym = newsym(name, type, ctype, stype, C_PARAM, size, 0);
+  appendsym(&Parmhead, &Parmtail, sym);
+  return (sym);
+}
+
+// 将符号添加到临时成员列表
+struct symtable *addmemb(char *name, int type, struct symtable *ctype,
+			 int stype, int size) {
+  struct symtable *sym = newsym(name, type, ctype, stype, C_MEMBER, size, 0);
+  appendsym(&Membhead, &Membtail, sym);
+  return (sym);
+}
+
+// 将struct添加到struct列表
+struct symtable *addstruct(char *name, int type, struct symtable *ctype,
+			   int stype, int size) {
+  struct symtable *sym = newsym(name, type, ctype, stype, C_STRUCT, size, 0);
+  appendsym(&Structhead, &Structtail, sym);
+  return (sym);
+}
+
+// 将struct添加到union列表
+struct symtable *addunion(char *name, int type, struct symtable *ctype,
+			   int stype, int size) {
+  struct symtable *sym = newsym(name, type, ctype, stype, C_UNION, size, 0);
+  appendsym(&Unionhead, &Uniontail, sym);
+  return (sym);
+}
+
+// 将枚举类型或值添加到枚举列表
+// 类别为C_ENUMTYPE或C_ENUMVAL
+// 使用posn存储int值
+struct symtable *addenum(char *name, int class, int value) {
+  struct symtable *sym = newsym(name, P_INT, NULL, 0, class, 0, value);
+  appendsym(&Enumhead, &Enumtail, sym);
+  return (sym);
+}
+
+// 将typedef添加到typedef列表
+struct symtable *addtypedef(char *name, int type, struct symtable *ctype,
+			   int stype, int size) {
+  struct symtable *sym = newsym(name, type, ctype, stype, C_TYPEDEF, size, 0);
+  appendsym(&Typehead, &Typetail, sym);
+  return (sym);
+}
+
+// 在特定列表中查找符号
+// 返回找到节点的指针，如果未找到则返回NULL
+// 如果class不为零，也匹配给定的class
+static struct symtable *findsyminlist(char *s, struct symtable *list, int class) {
+  for (; list != NULL; list = list->next)
+    if ((list->name != NULL) && !strcmp(s, list->name))
+      if (class==0 || class== list->class)
+        return (list);
+  return (NULL);
+}
+
+// 确定符号s是否在全局符号表中
+// 返回找到节点的指针，如果未找到则返回NULL
+struct symtable *findglob(char *s) {
+  return (findsyminlist(s, Globhead, 0));
+}
+
+// 确定符号s是否在局部符号表中
+// 返回找到节点的指针，如果未找到则返回NULL
+struct symtable *findlocl(char *s) {
+  struct symtable *node;
+
+  // 如果在函数体中，则查找参数
+  if (Functionid) {
+    node = findsyminlist(s, Functionid->member, 0);
+    if (node)
+      return (node);
+  }
+  return (findsyminlist(s, Loclhead, 0));
+}
+
+// 确定符号s是否在符号表中
+// 返回找到节点的指针，如果未找到则返回NULL
+struct symtable *findsymbol(char *s) {
+  struct symtable *node;
+
+  // 如果在函数体中，则查找参数
+  if (Functionid) {
+    node = findsyminlist(s, Functionid->member, 0);
+    if (node)
+      return (node);
+  }
+  // 否则，尝试局部和全局符号列表
+  node = findsyminlist(s, Loclhead, 0);
+  if (node)
+    return (node);
+  return (findsyminlist(s, Globhead, 0));
+}
+
+// 在成员列表中查找成员
+// 返回找到节点的指针，如果未找到则返回NULL
+struct symtable *findmember(char *s) {
+  return (findsyminlist(s, Membhead, 0));
+}
+
+// 在struct列表中查找struct
+// 返回找到节点的指针，如果未找到则返回NULL
+struct symtable *findstruct(char *s) {
+  return (findsyminlist(s, Structhead, 0));
+}
+
+// 在union列表中查找struct
+// 返回找到节点的指针，如果未找到则返回NULL
+struct symtable *findunion(char *s) {
+  return (findsyminlist(s, Unionhead, 0));
+}
+
+// 在枚举列表中查找枚举类型
+// 返回找到节点的指针，如果未找到则返回NULL
+struct symtable *findenumtype(char *s) {
+  return (findsyminlist(s, Enumhead, C_ENUMTYPE));
+}
+
+// 在枚举列表中查找枚举值
+// 返回找到节点的指针，如果未找到则返回NULL
+struct symtable *findenumval(char *s) {
+  return (findsyminlist(s, Enumhead, C_ENUMVAL));
+}
+
+// 在typedef列表中查找类型
+// 返回找到节点的指针，如果未找到则返回NULL
+struct symtable *findtypedef(char *s) {
+  return (findsyminlist(s, Typehead, 0));
+}
+
+// 重置符号表的内容
+void clear_symtable(void) {
+  Globhead =   Globtail  =  NULL;
+  Loclhead =   Locltail  =  NULL;
+  Parmhead =   Parmtail  =  NULL;
+  Membhead =   Membtail  =  NULL;
+  Structhead = Structtail = NULL;
+  Unionhead =  Uniontail =  NULL;
+  Enumhead =   Enumtail =   NULL;
+  Typehead =   Typetail =   NULL;
+}
+
+// 清空局部符号表中的所有条目
+void freeloclsyms(void) {
+  Loclhead = Locltail = NULL;
+  Parmhead = Parmtail = NULL;
+  Functionid = NULL;
+}
