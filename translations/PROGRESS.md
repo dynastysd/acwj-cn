@@ -90,7 +90,7 @@
 | Part 30 | Designing Structs, Unions and Enums | ⏳ 待开始 | - | - | 设计 Struct、Union 和 Enum |
 | Part 31 | Implementing Structs, Part 1 | ⏳ 待开始 | - | - | 实现 Struct part 1 |
 | Part 32 | Accessing Members in a Struct | ⏳ 待开始 | - | - | 访问 Struct 成员 |
-| Part 33 | Implementing Unions and Member Access | ⏳ 待开始 | - | - | 实现 Union 和成员访问 |
+| Part 33 | Implementing Unions and Member Access | ✅ 已完成 | - | 2026-04-20 | 实现 Union 和成员访问 |
 | Part 34 | Enums and Typedefs | ⏳ 待开始 | - | - | Enum 和 Typedef |
 
 ### 预处理与控制流 (Preprocessor & Control Flow)
